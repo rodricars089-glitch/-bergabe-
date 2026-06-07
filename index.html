@@ -1,3 +1,5 @@
+Hier ist der komplette Code noch einmal für dich bereitgestellt. Du kannst ihn direkt kopieren und deine gesamte index.html damit überschreiben:
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -51,7 +53,7 @@
             letter-spacing: 2px;
         }
 
-        /* Styling für die neuen Kundendaten-Felder */
+        /* Styling für die Kundendaten-Felder */
         .customer-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -263,6 +265,7 @@
 
     <form id="protocolForm" onsubmit="event.preventDefault(); window.print();">
         
+        <!-- Kundendaten-Bereich -->
         <div class="customer-info">
             <div class="form-group">
                 <label for="kundenname">Kundenname</label>
@@ -315,6 +318,7 @@
 <script>
     const positions = ['VL', 'VR', 'HL', 'HR'];
 
+    // Dynamische Erstellung der Fotofelder
     function createPhotoFields() {
         const sectionVor = document.getElementById('section-vor');
         const sectionNach = document.getElementById('section-nach');
@@ -465,3 +469,4 @@
 </body>
 </html>
 
+```
