@@ -44,9 +44,49 @@
             padding-bottom: 20px;
         }
 
-        .logo {
-            max-width: 250px;
-            height: auto;
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Styling für die neuen Kundendaten-Felder */
+        .customer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .form-group input {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+            width: 100%;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
         }
 
         h2 {
@@ -200,6 +240,17 @@
             .photo-card {
                 border: 1px solid #ccc !important;
             }
+            .customer-info {
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+            .form-group input {
+                border: none !important;
+                border-bottom: 1px solid #000 !important;
+                border-radius: 0 !important;
+                padding: 5px 0 !important;
+            }
         }
     </style>
 </head>
@@ -207,10 +258,33 @@
 
 <div class="container">
     <header>
-        <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMDAgODAiIHdpZHRoPSIzMDAiIGhlaWdodD0iODAiPxy8bSBMb2dvIFBsYWNlaG9sZGVyIC0tPgo8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjRmNmY5Ii8+Cjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjNlbSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2Q2MjUyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Uk9EUklDQVJTPC90ZXh0Pgo8L3N2Zz4=" alt="Rodricars Logo">
+        <h1>Rodricars</h1>
     </header>
 
     <form id="protocolForm" onsubmit="event.preventDefault(); window.print();">
+        
+        <div class="customer-info">
+            <div class="form-group">
+                <label for="kundenname">Kundenname</label>
+                <input type="text" id="kundenname" name="kundenname" placeholder="Name eingeben">
+            </div>
+            <div class="form-group">
+                <label for="kennzeichen">Kennzeichen</label>
+                <input type="text" id="kennzeichen" name="kennzeichen" placeholder="z. B. M-XY 123">
+            </div>
+            <div class="form-group">
+                <label for="fahrzeug">Fahrzeug</label>
+                <input type="text" id="fahrzeug" name="fahrzeug" placeholder="z. B. Golf 8">
+            </div>
+            <div class="form-group">
+                <label for="drehmoment">Drehmoment</label>
+                <input type="text" id="drehmoment" name="drehmoment" placeholder="z. B. 120 Nm">
+            </div>
+            <div class="form-group">
+                <label for="datum">Datum</label>
+                <input type="date" id="datum" name="datum">
+            </div>
+        </div>
         
         <h2>Vor Montage</h2>
         <div class="photo-section" id="section-vor"></div>
@@ -239,28 +313,23 @@
 </div>
 
 <script>
-    // Definition der Bezeichnungen
     const positions = ['VL', 'VR', 'HL', 'HR'];
 
-    // Dynamische Erstellung der Fotofelder
     function createPhotoFields() {
         const sectionVor = document.getElementById('section-vor');
         const sectionNach = document.getElementById('section-nach');
 
-        // Vor Montage Felder generieren (2 Fotos pro Position)
         positions.forEach(pos => {
             sectionVor.appendChild(createCard('vor', `${pos}-1`, `Vor Montage - ${pos} (Foto 1)`));
             sectionVor.appendChild(createCard('vor', `${pos}-2`, `Vor Montage - ${pos} (Foto 2)`));
         });
 
-        // Nach Montage Felder generieren (2 Fotos pro Position)
         positions.forEach(pos => {
             sectionNach.appendChild(createCard('nach', `${pos}-1`, `Nach Montage - ${pos} (Foto 1)`));
             sectionNach.appendChild(createCard('nach', `${pos}-2`, `Nach Montage - ${pos} (Foto 2)`));
         });
     }
 
-    // Hilfsfunktion zum Erstellen einer einzelnen Fotokarte
     function createCard(prefix, idSuffix, labelText) {
         const card = document.createElement('div');
         card.className = 'photo-card';
@@ -294,7 +363,6 @@
         return card;
     }
 
-    // Bildvorschau-Logik
     function handlePreview(input, previewId) {
         const container = document.getElementById(previewId);
         container.innerHTML = '';
@@ -315,7 +383,6 @@
         }
     }
 
-    // Unterschriften-Logik (Canvas-Handling)
     function setupSignature(canvasId) {
         const canvas = document.getElementById(canvasId);
         const ctx = canvas.getContext('2d');
@@ -380,11 +447,18 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // Initialisierung beim Laden der Seite
+    // Automatisches Setzen des heutigen Datums
+    function setTodayDate() {
+        const dateInput = document.getElementById('datum');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+    }
+
     window.onload = function() {
         createPhotoFields();
         setupSignature('sign-monteur');
         setupSignature('sign-kunde');
+        setTodayDate();
     };
 </script>
 
