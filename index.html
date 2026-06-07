@@ -56,7 +56,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
             background: #fafafa;
             padding: 20px;
             border-radius: 8px;
@@ -75,7 +75,7 @@
             color: var(--text);
         }
 
-        .form-group input, .form-group textarea {
+        .form-group input {
             padding: 10px;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -83,25 +83,10 @@
             outline: none;
             transition: border-color 0.2s;
             width: 100%;
-            font-family: inherit;
         }
 
-        .form-group input:focus, .form-group textarea:focus {
+        .form-group input:focus {
             border-color: var(--primary);
-        }
-
-        /* Styling für den neuen Hinweise-Kasten */
-        .notes-info {
-            background: #fafafa;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin-bottom: 30px;
-        }
-
-        .notes-info textarea {
-            resize: vertical;
-            min-height: 60px;
         }
 
         h2 {
@@ -240,15 +225,14 @@
             background: var(--primary-hover);
         }
 
-        /* DRUCK-OPTIMIERUNG (URL und Ränder entfernen) */
+        /* HIER WURDE DIE DRUCKOPTIMIERUNG ERWEITERT */
         @media print {
             @page {
-                margin: 1cm !important; /* Entfernt die Browser-Kopfzeile mit der URL */
+                margin: 1cm; /* Entfernt die Standardränder des Browsers, was die URL ausblendet */
             }
-            html, body {
+            body {
                 background: #fff;
                 padding: 0;
-                margin: 0;
             }
             .container {
                 box-shadow: none;
@@ -261,7 +245,7 @@
             .photo-card {
                 border: 1px solid #ccc !important;
             }
-            .customer-info, .notes-info {
+            .customer-info {
                 background: none !important;
                 border: none !important;
                 padding: 0 !important;
@@ -271,13 +255,6 @@
                 border-bottom: 1px solid #000 !important;
                 border-radius: 0 !important;
                 padding: 5px 0 !important;
-            }
-            .form-group textarea {
-                border: none !important;
-                border-bottom: 1px dashed #000 !important;
-                border-radius: 0 !important;
-                padding: 5px 0 !important;
-                background: transparent;
             }
         }
     </style>
@@ -311,13 +288,6 @@
             <div class="form-group">
                 <label for="datum">Datum</label>
                 <input type="date" id="datum" name="datum">
-            </div>
-        </div>
-
-        <div class="notes-info">
-            <div class="form-group">
-                <label for="hinweise">Hinweise / Vorschäden</label>
-                <textarea id="hinweise" name="hinweise" placeholder="z. B. Bordsteinschaden VR, Kratzer HL..."></textarea>
             </div>
         </div>
         
